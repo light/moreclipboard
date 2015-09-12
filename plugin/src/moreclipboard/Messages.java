@@ -13,6 +13,7 @@ public class Messages extends NLS
 	public static String ContentsView_MoveUp;
 	public static String ContentsView_RemoveAllActionName;
 	public static String ContentsView_RemoveCurrentActionName;
+	public static String PastePopupDialog_infoText;
 	static
 	{
 		// initialize resource bundle
