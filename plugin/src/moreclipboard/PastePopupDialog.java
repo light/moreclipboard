@@ -87,6 +87,19 @@ public class PastePopupDialog extends org.eclipse.jface.dialogs.PopupDialog
 		}
 	}
 
+	private void processRemoveSelectedElement()
+	{
+		final int itemIndex = m_listView.getSelectionIndex();
+		if (itemIndex < 0)
+		{
+			return;
+		}
+
+		Plugin.getInstance().getContents().removeElement(itemIndex);
+		m_listView.setItems(Plugin.getInstance().getContents().getElements());
+		m_listView.select(itemIndex > m_listView.getItemCount() - 1 ? itemIndex - 1 : itemIndex);
+	}
+
 	@Override
 	public void widgetDefaultSelected(SelectionEvent e)
 	{
@@ -113,6 +126,10 @@ public class PastePopupDialog extends org.eclipse.jface.dialogs.PopupDialog
 				)
 		{
 			processPasteSelectedElement();
+		}
+		else if (e.keyCode == SWT.DEL)
+		{
+			processRemoveSelectedElement();
 		}
 	}
 
