@@ -126,7 +126,7 @@ public class PastePopupDialog extends org.eclipse.jface.dialogs.PopupDialog
 	private void processRemoveSelectedElement()
 	{
 		final int itemIndex = m_listView.getSelectionIndex();
-		if (itemIndex < 0)
+		if (itemIndex < 1) // Prevent removal of first element since is corresponds to the system clipboard
 		{
 			return;
 		}
@@ -134,16 +134,22 @@ public class PastePopupDialog extends org.eclipse.jface.dialogs.PopupDialog
 		Plugin.getInstance().getContents().removeElement(itemIndex);
 		m_listView.setItems(Plugin.getInstance().getContents().getElements());
 		m_listView.select(itemIndex > m_listView.getItemCount() - 1 ? itemIndex - 1 : itemIndex);
+		processSelectionChanged();
 	}
 
 	private void processSelectionChanged()
 	{
 		int selectionIndex = m_listView.getSelectionIndex();
+		String contents;
 		if (selectionIndex != -1)
 		{
-			String contents = Plugin.getInstance().getContents().getElement(selectionIndex);
-			m_text.setText(contents);
+			contents = Plugin.getInstance().getContents().getElement(selectionIndex);
 		}
+		else
+		{
+			contents = "";
+		}
+		m_text.setText(contents);
 	}
 
 	@Override
